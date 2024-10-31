@@ -1,3 +1,6 @@
+import 'package:aula_02_onboarding/features/login/forgot_password.dart';
+import 'package:aula_02_onboarding/features/login/presentation/Register.dart';
+//import 'package:aula_02_onboarding/main.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -67,13 +70,18 @@ class _LoginPageState extends State<LoginPage> {
               ),
               TextButton(
                 onPressed: () {
-                  // Navigate to forgot password screen
+                    Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const ForgotPasswordScreen()),
+                    );
+                  
                 },
                 child: const Text('Forgot Password?'),
               ),
               TextButton(
                 onPressed: () {
-                  // Navigate to register screen
+                  Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                  );
                 },
                 child: const Text('Register'),
               ),
