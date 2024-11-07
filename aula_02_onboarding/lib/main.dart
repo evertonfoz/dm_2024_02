@@ -1,6 +1,9 @@
 import 'package:aula_02_onboarding/features/login/forgot_password.dart';
-import 'package:aula_02_onboarding/features/login/presentation/Register.dart';
+import 'package:aula_02_onboarding/features/register/presentation/register.dart';
 import 'package:aula_02_onboarding/features/login/reset_password.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,10 +12,17 @@ import 'features/login/presentation/login_page.dart';
 import 'features/login/verify_code.dart';
 import 'features/on_boarding/presentation/onboarding_page.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final SharedPreferencesAsync asyncPrefs = SharedPreferencesAsync();
+
+  await dotenv.load(fileName: "supabase.env");
+
+  await Supabase.initialize(
+    url: dotenv.env['SUPABASE_URL'] ?? '',
+    anonKey: dotenv.env['SUPABASE_ANNON_KEY'] ?? '',
+  );
 
   asyncPrefs.getBool('show_on_boarding').then((value) {
     runApp(OnBoardingApp(
@@ -47,25 +57,3 @@ class OnBoardingApp extends StatelessWidget {
     );
   }
 }
-
-/*class ForgotPassword extends StatelessWidget {
-  const ForgotPassword({
-    super.key,
-    required this.context,
-  });
-
-  final BuildContext context;
-
-  @override
-  Widget build(BuildContext context) {
-     return MaterialApp( 
-      title: 'Forgot Password',
-       theme: ThemeData( 
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        primarySwatch: Colors.blue,
-        ),
-        home: const ForgotPasswordScreen()
-     );
-   }
-}
-*/
